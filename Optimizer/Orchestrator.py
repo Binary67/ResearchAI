@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 from Agents import CodexClient
-from Optimizer.Tracker import append_result
+from Optimizer.Tracker import append_result, load_results
 from Problem.Harness.DataPipeline import KaggleDataLoader, split_data
 from Problem.Harness.EvaluationPipeline import ModelEvaluator
 
@@ -81,8 +81,22 @@ def run_experiment(
 
             session = client.start_session(cwd=str(ENGINE_DIR), dangerous=True)
 
+            prior = load_results(LOG_PATH)
+            prior_context = ""
+            if prior:
+                lines = []
+                for r in prior:
+                    score_str = f"MSE = {r['score']:.3e}" if r["score"] is not None else "FAILED"
+                    lines.append(f"- Experiment {r['iteration']} ({r['mode']}) — {score_str}: {r['summary']}")
+                prior_context = (
+                    "Previous experiments:\n"
+                    + "\n".join(lines)
+                    + "\n\nYou MUST try a meaningfully different approach from what has already been attempted.\n\n"
+                )
+
             if mode == "explore":
                 session.prompt(
+                    f"{prior_context}"
                     f"The evaluation code that will score your model:\n\n"
                     f"```python\n{eval_source}\n```\n\n"
                     f"The target column is `{target}`.\n"
@@ -92,6 +106,7 @@ def run_experiment(
             else:
                 code_listing = _read_code_files(ENGINE_DIR)
                 session.prompt(
+                    f"{prior_context}"
                     f"The evaluation code that will score your model:\n\n"
                     f"```python\n{eval_source}\n```\n\n"
                     f"The target column is `{target}`.\n\n"
@@ -162,12 +177,15 @@ def run_experiment(
             if score is not None:
                 summary_result = session.prompt(
                     f"Your model scored MSE = {score}. "
-                    f"Summarize what you did, what worked, and what failed."
+                    f"Write a 2-3 sentence summary: what model/approach you used, "
+                    f"what key preprocessing choices you made, and one main takeaway. "
+                    f"Keep it concise."
                 )
             else:
                 summary_result = session.prompt(
                     f"Evaluation failed: {error}. "
-                    f"Summarize what you attempted and what went wrong."
+                    f"Write a 2-3 sentence summary: what you attempted, "
+                    f"what went wrong, and one main takeaway. Keep it concise."
                 )
 
             print(f"\nSummary: {summary_result.final_text}\n")
