@@ -47,3 +47,12 @@ class KaggleDataLoader:
                     frames[path.name] = pd.read_excel(path)
 
         return frames
+
+
+def split_data(df, target, test_size=0.2, random_state=42):
+    from sklearn.model_selection import train_test_split
+
+    train_df, val_df = train_test_split(
+        df, test_size=test_size, random_state=random_state
+    )
+    return train_df, val_df
