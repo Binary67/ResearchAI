@@ -7,3 +7,4 @@ class PromptResult:
     turn_id: str
     status: str
     final_text: str
+    files_changed: int = 0

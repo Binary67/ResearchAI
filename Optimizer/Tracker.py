@@ -2,8 +2,8 @@ import json
 from pathlib import Path
 
 
-def append_result(path, iteration, score, summary):
-    record = {"iteration": iteration, "score": score, "summary": summary}
+def append_result(path, iteration, score, summary, mode):
+    record = {"iteration": iteration, "score": score, "summary": summary, "mode": mode}
     with open(path, "a") as f:
         f.write(json.dumps(record) + "\n")
 

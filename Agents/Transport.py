@@ -250,6 +250,8 @@ class AppServerTransport:
             snapshot_after=snapshot_after,
         )
 
+        outcome.prompt_result.files_changed = file_count
+
         if logger is not None:
             logger.write(
                 "Answer",
