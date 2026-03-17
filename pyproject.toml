@@ -10,3 +10,6 @@ dependencies = [
     "pandas>=3.0.1",
     "python-dotenv>=1.2.2",
 ]
+
+[tool.setuptools.packages.find]
+include = ["Problem*", "Codex*", "Optimizer*", "Examples*"]
