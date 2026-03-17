@@ -13,9 +13,9 @@ from itertools import count
 from pathlib import Path
 from typing import Any
 
-from Codex.Errors import CodexProcessError, CodexRpcError, CodexTurnError
-from Codex.Logging import SessionLogger
-from Codex.Types import PromptResult
+from Agents.Errors import CodexProcessError, CodexRpcError, CodexTurnError
+from Agents.Logging import SessionLogger
+from Agents.Types import PromptResult
 
 
 _CLIENT_INFO = {

@@ -13,4 +13,4 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["Problem*", "Codex*", "Optimizer*", "Examples*"]
+include = ["Problem*", "Agents*", "Optimizer*", "Examples*"]

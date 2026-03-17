@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from Codex.Logging import SessionLogger
-from Codex.Session import CodexSession
-from Codex.Transport import AppServerTransport
+from Agents.Logging import SessionLogger
+from Agents.Session import CodexSession
+from Agents.Transport import AppServerTransport
 
 
 class CodexClient:

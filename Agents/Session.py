@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from Codex.Logging import SessionLogger
-from Codex.Transport import AppServerTransport
-from Codex.Types import PromptResult
+from Agents.Logging import SessionLogger
+from Agents.Transport import AppServerTransport
+from Agents.Types import PromptResult
 
 
 class CodexSession:
